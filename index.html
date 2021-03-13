@@ -69,18 +69,17 @@
     </div>
 </nav>
 
-<main class="container">
+<main class="container mb-5">
 
     <div class="card text-center mt-5">
         <div class="card-header">
             <ul class="nav card-header-pills d-flex justify-content-center">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#"> Mochimo web wallet </a>
+                    <a class="nav-link active" href="#"> </a>
                 </li>
             </ul>
         </div>
         <div class="card-body">
-            <h5 class="card-title">Utilities</h5>
             <p class="card-text">
             <div class="input-group mb-3">
                 <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -100,8 +99,7 @@
                 <input type="text" class="form-control" aria-label="Text input with dropdown button">
             </div>
             <div class="row g-2">
-                <div class="col-6">
-                    <h5 class="card-header">Featured</h5>
+                <div class="col-12">
                     <div class="card-body">
                         <h5 class="card-title">Create a new wallet</h5>
                         <p class="card-text"> Here you can create a new wallet
@@ -116,21 +114,17 @@
                         <div class="input-group mb-2">
                             <input type="text" class="form-control" placeholder="Wallet password"
                                    aria-label="Recipient's username" aria-describedby="button-addon4">
-                            <button class="btn btn-outline-secondary" type="button" id="button-addon4">Random
-                                generation
-                            </button>
                         </div>
                         <div class="input-group mb-2">
                             <input type="text" class="form-control" placeholder="Wallet password confirmation"
                                    aria-label="Recipient's username" aria-describedby="button-addon5">
-                            <button class="btn btn-outline-secondary" type="button" id="button-addon5">Random
-                                generation
-                            </button>
                         </div>
-                        <div class="input-group mb-2">
+                        <div class="input-group mb-2 d-flex justify-content-end">
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
-                                <label class="form-check-label" for="flexSwitchCheckChecked"> Do you want use a seed phrase </label>
+                                <label class="form-check-label" for="flexSwitchCheckChecked"> Do you want use a seed
+                                    phrase </label>
+                                <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value=""
+                                       aria-label="...">
                             </div>
                         </div>
 
@@ -142,17 +136,8 @@
                             </button>
                         </div>
                         <div class="d-grid gap-2">
-                            <button class="btn btn-primary" type="button"> Create </button>
+                            <button class="btn btn-primary" type="button"> Create</button>
                         </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <h5 class="card-header">get some MCM </h5>
-                    <div class="card-body">
-                        <h5 class="card-title">Special title treatment</h5>
-                        <p class="card-text">With supporting text below as a natural lead-in to additional
-                            content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
                     </div>
                 </div>
             </div>
@@ -265,35 +250,37 @@
             </div>
         </div>
     </section>
-
-    <footer>
-        <nav class="navbar fixed-bottom navbar-light bg-light" data-bs-toggle="collapse"
-             data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown " aria-expanded="false"
-             aria-label="Toggle navigation">
-            <div class="container-fluid text-center">
-                <a class="navbar-brand" href="#">Next Generation Currency</a>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                     class="bi bi-arrows-expand" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                          d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8zM7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708l2-2zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10z"/>
-                </svg>
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <div> Mochimo is a post-quantum cryptocurrency utilizing WOTS+ addresses in conjuction with
-                        ChainCrunch™ and Trigg's algorithm to create a secure, fast, and reliable transaction network.
-                    </div>
-                    <div>
-                        <hr class="dropdown-divider"/>
-                    </div>
-                    <div class="row g-3 text-center mt-2">
-                        <div class="col-3"> Learn More →</div>
-                        <div class="col-4"> GitHub Repository →</div>
-                        <div class="col-3"> White Paper →</div>
-                    </div>
+</main>
+<div>
+    <hr class="mb-5"/>
+</div>
+<footer class="mt-5">
+    <nav class="navbar fixed-bottom navbar-light bg-light" data-bs-toggle="collapse"
+         data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown " aria-expanded="false"
+         aria-label="Toggle navigation">
+        <div class="container-fluid text-center">
+            <a class="navbar-brand" href="#">Next Generation Currency</a>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-arrows-expand" viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M1 8a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 8zM7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708l2-2zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10z"/>
+            </svg>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <div> Mochimo is a post-quantum cryptocurrency utilizing WOTS+ addresses in conjuction with
+                    ChainCrunch™ and Trigg's algorithm to create a secure, fast, and reliable transaction network.
+                </div>
+                <div>
+                    <hr class="dropdown-divider"/>
+                </div>
+                <div class="row g-3 text-center mt-2">
+                    <div class="col-3"> Learn More →</div>
+                    <div class="col-4"> GitHub Repository →</div>
+                    <div class="col-3"> White Paper →</div>
                 </div>
             </div>
-        </nav>
-    </footer>
+        </div>
+    </nav>
+</footer>
 
-</main>
 </body>
 </html>
