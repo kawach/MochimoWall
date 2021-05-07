@@ -1,0 +1,3 @@
+export const NEW_WALLET = "NEW_WALLET"
+export const NEW_BALANCE = "WALLET_NEW_BALANCE"
+export const LOAD_WALLET = "LOAD_WALLET"
