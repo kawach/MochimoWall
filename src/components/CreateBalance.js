@@ -24,7 +24,7 @@ export default class CreateBalance extends Component {
         let result = ['0', '2'];
         let hexRef = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'];
 
-        for (let n = 0; n < 12; n++) {
+        for (let n = 0; n < 22; n++) {
             result.push(hexRef[Math.floor(Math.random() * 16)]);
         }
         this.setState({input: result.join('')});
