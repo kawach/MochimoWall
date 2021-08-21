@@ -19,7 +19,6 @@ export default class App extends Component {
         this.setState({logged: !this.state.logged})
     }
     render() {
-        console.log(this)
         return (
             <Fragment>
                 <TopNav />

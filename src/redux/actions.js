@@ -25,11 +25,12 @@ export const newBalance = (balance_id,lastBlock, tag = undefined, tagStatus = un
     }
 }
 
-export const loadWallet = (wallet) => {
+export const loadWallet = (encrypted_seed, checkpassword, naked) => {
     return {
         type: LOAD_WALLET,
         payload: {
-            ...wallet
+            encrypted_seed,checkpassword,naked
         }
     }
+
 }

@@ -4,9 +4,7 @@ import {generate_full_WOTS} from "../wallet/manager";
 import {sha256} from "../wallet";
 import BalanceContent from "./BalanceContent";
 import Send from "./Send";
-
-const Mochimo = require("mochimo")
-
+const mochimo = require("mochimo")
 export class BalanceHeader extends Component {
     constructor(props) {
         super(props);
@@ -18,10 +16,8 @@ export class BalanceHeader extends Component {
     }
 
     componentDidMount() {
-        const balance_seed = Buffer.from(sha256(this.props.secret + this.props.index)).toString("hex")
-        const wots_seed = Buffer.from(sha256(balance_seed + this.props.value[1].spent)).toString('hex')
-        const wots = generate_full_WOTS(wots_seed,this.props.value[1].tag )
-        this.setState({wots: wots })
+        console.log(this.props.seed)
+        const wots = mochimo.Wots.generate(this.props.seed)
     }
 
     handleSend() {
@@ -33,11 +29,14 @@ export class BalanceHeader extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+        // console.log(this.state.wots.address.toString().replaceAll(',',''))
         if (this.state.wots !== prevState.wots) {
-            fetch("http://api.mochimo.org:8888/bc/balance/" + Buffer.from(this.state.wots[0]).toString("hex")).then(res => res.json()).then(response => {
-                console.log(response)
-                this.setState({balance: response.balance})
-            })
+            // fetch("http://api.mochimo.org:8888/bc/balance/" + this.state.wots.address.toString().replaceAll(',',''), {
+            //     mode: "no-cors",
+            // }).then(res => res.json()).then(response => {
+            //     console.log(response)
+            //     this.setState({balance: response.balance})
+            // })
         }
     }
     render() {
@@ -55,7 +54,7 @@ export class BalanceHeader extends Component {
 
 
                             <div className="row-collumns col-4 text-black">
-                                { this.props.value[1].tag ?<div>Balance Tag : <span id="theTag"> {this.props.value[1].tag} </span></div>:null }
+                                {/*{ this.props.value[1].tag ?<div>Balance Tag : <span id="theTag"> {this.props.value[1].tag} </span></div>:null }*/}
                             </div>
                             <div className=""> Amount
                                 available {undefined !== this.state.balance ? this.state.balance :

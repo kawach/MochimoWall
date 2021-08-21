@@ -4,13 +4,16 @@ import {connect} from "react-redux";
 import wallet from "../redux/reducers/wallet";
 import CreateBalance from "./CreateBalance";
 import {newBalance} from "../redux/actions";
+import {BalanceHeader} from "./BalanceHeader";
 export class Logged extends Component {
     constructor(props) {
         super(props);
         this.state = {
             input: {},
             show: false,
-            count: 0,
+            balances: {
+                count : 1
+            },
             balanceCreation: false
         }
         this.handleChange = this.handleChange.bind(this)
@@ -29,7 +32,7 @@ export class Logged extends Component {
             .then(res => res.json())
             .then(
                 (result) => {
-                    this.props.newBalance(this.state.input.tag, this.state.input.password, this.state.count, result.block.height)
+                    this.props.newBalance(this.state.input.tag, this.state.input.password, this.state.balances.count, result.block.height)
                 }, (result) => {
                     return console.log("connexion error")
                 }
@@ -49,7 +52,7 @@ export class Logged extends Component {
 
 
     handleDownload() {
-        const {wallet} = this.props.wallet
+        // const {wallet} = this.props.wallet
         const fileName = "wallet";
         const blob = new Blob([JSON.stringify(this.props.wallet)], {type: "application/json"})
         const el = document.createElement('a')
@@ -61,15 +64,15 @@ export class Logged extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.props.wallet.balances !== prevProps.wallet.balances) {
-            this.setState({count: Object.keys(this.props.wallet.balances).length})
-        }
+        // if (this.props.wallet.balances !== prevProps.wallet.balances) {
+        //     this.setState({count: Object.keys(this.props.wallet.balances).length})
+        // }
     }
 
     componentDidMount() {
-        if (this.props.wallet.balances !== undefined) {
-            this.setState({count: (Object.keys(this.props.wallet.balances)).length})
-        }
+        // if (this.props.wallet.balances !== undefined) {
+        //     this.setState({count: (Object.keys(this.props.wallet.balances)).length})
+        // }
     }
 
     xorArray(seed_bytes, password_bytes) {
@@ -114,6 +117,9 @@ export class Logged extends Component {
 
                 <CreateBalance isOpen={this.state.balanceCreation} closeModal={this.toggleBalanceCreation} balanceCreation={this.props.newBalance} id={this.state.count}/>
 
+                {[this.state.balances.count].map(() => {
+                    return <BalanceHeader seed={this.props.wallet.naked}/>
+                })}
             </div>
         )
     }

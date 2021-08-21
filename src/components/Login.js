@@ -47,11 +47,11 @@ export class Login extends Component {
     handleClick(){
         const encryptedSeed = this.state.wallet.encryptedSeed
         const userInput = Buffer.from(sha256(sha256(this.state.input))).toString('hex')
-        this.props.handleWallet(userInput)
         const checkPassword = this.state.wallet.check_password
         const naked = this.xorArray(userInput, encryptedSeed)
         if (checkPassword.toString().localeCompare(userInput) === 0){
-            this.props.loadWallet(this.state.wallet)
+            this.props.handleWallet(encryptedSeed,checkPassword)
+            this.props.loadWallet(encryptedSeed,checkPassword,naked)
         }
     }
 
