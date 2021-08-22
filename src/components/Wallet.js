@@ -12,7 +12,6 @@ export class Wallet extends Component {
         this.state = {
             secret: undefined,
             logged: false,
-            count: 1
         }
         this.handleWallet = this.handleWallet.bind(this)
     }
@@ -31,7 +30,6 @@ export class Wallet extends Component {
     }
 
     render() {
-        console.log(this)
         if (!this.props.isLogged) {
             return (
                 <Login handleWallet={this.handleWallet}/>

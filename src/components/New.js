@@ -2,7 +2,7 @@ import {Component} from "react";
 import {Button, Card, Form} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import dictionary from "../dictionnary/dictionary";
-import {newWallet} from "../redux/actions";
+import {loadWallet} from "../redux/actions";
 import {connect} from "react-redux";
 import {sha256} from "../wallet";
 
@@ -30,7 +30,8 @@ export class New extends Component {
         const seedHex = sha256(seed.toString().replaceAll(",", ""))
         const checkPassword = Buffer.from(sha256(sha256(this.state.password))).toString('hex')
         const encryptedSeed = this.xorArray(seedHex, checkPassword)
-        this.props.newWallet(this.state.name, encryptedSeed, checkPassword)
+        const count = 1
+        this.props.loadWallet(encryptedSeed,checkPassword,count,seedHex)
         this.props.login()
     }
 
@@ -115,4 +116,4 @@ export class New extends Component {
 }
 
 
-export default connect(null, {newWallet})(New);
+export default connect(null, {loadWallet})(New);

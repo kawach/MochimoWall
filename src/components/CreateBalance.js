@@ -1,7 +1,9 @@
 import {Component} from "react";
 import {Button, Col, Form, InputGroup, Modal, Row} from "react-bootstrap";
+import {connect} from "react-redux";
+import {newBalance, loadWallet} from "../redux/actions";
 
-export default class CreateBalance extends Component {
+class CreateBalance extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -31,31 +33,17 @@ export default class CreateBalance extends Component {
     }
 
     handleBalanceCreation(event) {
-        //TODO: Check tag length
-        const last_block = fetch("http://api.mochimo.org:8888/net/chain")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    if (this.state.input) {
-                        this.props.balanceCreation(this.props.id, result.block.height, this.state.input, "to_activate")
-                    } else {
-                        this.props.balanceCreation(this.props.id, result.block.height)
-                    }
-
-                }, (result) => {
-                    return console.log("connexion error")
-                }
-            ).finally(() => {
-                this.props.closeModal()
-                this.setState({input: undefined})
-            })
+        this.props.newBalance(this.props.id, this.state.input, "to_activate")
+        this.props.loadWallet(this.props.wallet.encryptedSeed,this.props.wallet.check_password, this.props.wallet.count + 1, this.props.wallet.naked)
+        this.props.closeModal()
+        this.setState({input: undefined})
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.id !== this.props.id) {
-            this.setState({id: this.props.id + 1})
-        }
-    }
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     if (prevProps.id !== this.props.id) {
+    //         this.setState({id: this.props.id + 1})
+    //     }
+    // }
 
     render() {
         console.log(this)
@@ -111,3 +99,9 @@ export default class CreateBalance extends Component {
         );
     }
 }
+function mapStateToProps(state) {
+    const {wallet} = state
+    return {wallet}
+}
+
+export default connect(mapStateToProps, {newBalance,loadWallet})(CreateBalance)

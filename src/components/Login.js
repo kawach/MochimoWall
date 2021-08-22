@@ -4,6 +4,7 @@ import {Link, Route, Switch} from "react-router-dom";
 import {loadWallet} from "../redux/actions";
 import {connect} from "react-redux";
 import {sha256} from "../wallet";
+import {forEach} from "react-bootstrap/ElementChildren";
 
 export class Login extends Component {
     constructor(props) {
@@ -39,19 +40,21 @@ export class Login extends Component {
     handleFile = (e) =>{
         const content = e.target.result
         const wallet = JSON.parse(content)
+        console.log(wallet)
         // this.props.loadWallet(wallet)
-        this.setState({wallet} )
+        this.setState({wallet}  )
     }
 
     /*Handle login phase*/
     handleClick(){
-        const encryptedSeed = this.state.wallet.encryptedSeed
+        const encryptedSeed = this.state.wallet.encryptedSeed[0] /*TODO: make this more beautifull*/
         const userInput = Buffer.from(sha256(sha256(this.state.input))).toString('hex')
         const checkPassword = this.state.wallet.check_password
         const naked = this.xorArray(userInput, encryptedSeed)
+        const count = this.state.wallet.count
         if (checkPassword.toString().localeCompare(userInput) === 0){
-            this.props.handleWallet(encryptedSeed,checkPassword)
-            this.props.loadWallet(encryptedSeed,checkPassword,naked)
+            this.props.loadWallet(encryptedSeed,checkPassword,count,naked)
+            this.props.handleWallet(encryptedSeed,checkPassword,count,naked)
         }
     }
 

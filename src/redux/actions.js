@@ -13,23 +13,22 @@ export const newWallet = (name,encryptedSeed,checkPassord) => {
    }
 }
 
-export const newBalance = (balance_id,lastBlock, tag = undefined, tagStatus = undefined) => {
+export const newBalance = (balance_id, tag = undefined, tagStatus = undefined) => {
     return {
         type: NEW_BALANCE,
         payload: {
             balance_id: balance_id,
             tag: tag,
-            last_block: lastBlock,
             status: tagStatus
         }
     }
 }
 
-export const loadWallet = (encrypted_seed, checkpassword, naked) => {
+export const loadWallet = (encryptedSeed, check_password,count,naked) => {
     return {
         type: LOAD_WALLET,
         payload: {
-            encrypted_seed,checkpassword,naked
+            encryptedSeed,check_password,count,naked
         }
     }
 

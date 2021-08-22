@@ -5,15 +5,13 @@ import wallet from "../redux/reducers/wallet";
 import CreateBalance from "./CreateBalance";
 import {newBalance} from "../redux/actions";
 import {BalanceHeader} from "./BalanceHeader";
+
 export class Logged extends Component {
     constructor(props) {
         super(props);
         this.state = {
             input: {},
             show: false,
-            balances: {
-                count : 1
-            },
             balanceCreation: false
         }
         this.handleChange = this.handleChange.bind(this)
@@ -22,22 +20,22 @@ export class Logged extends Component {
         this.toggleBalanceCreation = this.toggleBalanceCreation.bind(this)
     }
 
-    toggleBalanceCreation(){
+    toggleBalanceCreation() {
         this.setState({balanceCreation: !this.state.balanceCreation})
     }
 
     handleBalanceCreation(event) {
         //TODO: Check tag length
-        const last_block = fetch("http://api.mochimo.org:8888/net/chain")
-            .then(res => res.json())
-            .then(
-                (result) => {
-                    this.props.newBalance(this.state.input.tag, this.state.input.password, this.state.balances.count, result.block.height)
-                }, (result) => {
-                    return console.log("connexion error")
-                }
-            )
-        this.setState({input: {}, show: false})
+        // const last_block = fetch("http://api.mochimo.org:8888/net/chain")
+        //     .then(res => res.json())
+        //     .then(
+        //         (result) => {
+        //             this.props.newBalance(this.state.input.tag, this.state.input.password, this.state.balances.count, result.block.height)
+        //         }, (result) => {
+        //             return console.log("connexion error")
+        //         }
+        //     )
+
     }
 
     handleChange(event) {
@@ -52,9 +50,13 @@ export class Logged extends Component {
 
 
     handleDownload() {
-        // const {wallet} = this.props.wallet
         const fileName = "wallet";
-        const blob = new Blob([JSON.stringify(this.props.wallet)], {type: "application/json"})
+        let file = {
+            "encryptedSeed": [this.props.wallet.encryptedSeed],
+            "check_password": this.props.wallet.check_password,
+            "count": this.props.wallet.count
+        }
+        const blob = new Blob([JSON.stringify(file)], {type: "application/json"})
         const el = document.createElement('a')
         el.href = URL.createObjectURL(blob)
         el.download = fileName + ".json"
@@ -76,14 +78,17 @@ export class Logged extends Component {
     }
 
     xorArray(seed_bytes, password_bytes) {
-        var encrypted_seed = [];
+        var result = [];
         for (let iter = 0; iter < 32; iter++) {
-            encrypted_seed.push(seed_bytes[iter] ^ password_bytes[iter])
+            result.push(seed_bytes[iter] ^ password_bytes[iter])
         }
-        return encrypted_seed;
+        return result;
     }
 
     render() {
+        /*TODO: gestion upload wallet (redux ?)
+        * TODO:  
+        * */
         console.log(this)
         return (
             <div className={"container p-5"}>
@@ -115,11 +120,11 @@ export class Logged extends Component {
                     </Row>
                 </Container>
 
-                <CreateBalance isOpen={this.state.balanceCreation} closeModal={this.toggleBalanceCreation} balanceCreation={this.props.newBalance} id={this.state.count}/>
-
-                {[this.state.balances.count].map(() => {
-                    return <BalanceHeader seed={this.props.wallet.naked}/>
-                })}
+                <CreateBalance isOpen={this.state.balanceCreation} closeModal={this.toggleBalanceCreation}
+                               id={this.props.wallet.count + 1}/>
+                {/*TODO: rework this as ul/li list */}
+                {Array.from({ length: this.props.wallet.count }, (_, i) => <BalanceHeader seed={this.props.wallet.naked} id={i}/>)}
+                {}
             </div>
         )
     }
@@ -130,4 +135,4 @@ function mapStateToProps(state) {
     return {wallet}
 }
 
-export default connect(mapStateToProps, {newBalance})(Logged)
+export default connect(mapStateToProps, null)(Logged)
