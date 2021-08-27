@@ -1,9 +1,9 @@
 import {Component} from "react";
 import {Accordion, Card, Spinner} from "react-bootstrap";
 import {generate_full_WOTS} from "../wallet/manager";
-import {sha256} from "../wallet";
 import BalanceContent from "./BalanceContent";
 import Send from "./Send";
+
 const mochimo = require("mochimo")
 
 export class BalanceHeader extends Component {
@@ -18,7 +18,8 @@ export class BalanceHeader extends Component {
 
     componentDidMount() {
         const wots = mochimo.Wots.generate(Buffer.from(this.props.seed + this.props.id))
-        this.setState({wots: wots})
+        let i = Buffer.from(wots.address).toString("hex")
+        fetch("http://api.mochimo.org:8888/bc/balance/" + i).then(res => res.json()).then((result)=>{ this.setState({wots: wots, balance: result.balance})})
     }
 
     handleSend() {
@@ -27,18 +28,6 @@ export class BalanceHeader extends Component {
         } else {
             this.setState({active: "balance", changeWots: undefined})
         }
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.state.wots !== prevState.wots) {
-            fetch("http://api.mochimo.org:8888/bc/balance/" + Buffer.from(this.state.wots.address).toString('hex'), {
-                mode: "no-cors",
-            }).then(res => res.json()).then(response => {
-                console.log(response)
-                this.setState({balance: response.balance})
-            })
-        }
-
     }
     render() {
         const active = this.state.active
@@ -59,8 +48,9 @@ export class BalanceHeader extends Component {
                                     <Spinner animation="border" role="status"> </Spinner>}</div>
                         </Accordion.Toggle>
                         <Accordion.Collapse eventKey={this.props.id + 1}>
-                            {active === "balance" ? <BalanceContent onActiveChange={this.handleSend} balance={this.props.balance} /> :
-                                <Send onActiveChange={this.handleSend} sourceWots={wots}/> }
+                            {active === "balance" ?
+                                <BalanceContent onActiveChange={this.handleSend} balance={this.props.balance}/> :
+                                <Send onActiveChange={this.handleSend} sourceWots={wots} changeWots={mochimo.Wots.generate(Buffer.from(this.props.seed + this.props.count))} balance={this.state.balance}/>}
                         </Accordion.Collapse>
                     </Accordion>
                 </Card>

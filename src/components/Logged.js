@@ -52,7 +52,7 @@ export class Logged extends Component {
     handleDownload() {
         const fileName = "wallet";
         let file = {
-            "encryptedSeed": [this.props.wallet.encryptedSeed],
+            "encryptedSeed": this.props.wallet.encryptedSeed,
             "check_password": this.props.wallet.check_password,
             "count": this.props.wallet.count
         }
@@ -123,7 +123,7 @@ export class Logged extends Component {
                 <CreateBalance isOpen={this.state.balanceCreation} closeModal={this.toggleBalanceCreation}
                                id={this.props.wallet.count + 1}/>
                 {/*TODO: rework this as ul/li list */}
-                {Array.from({ length: this.props.wallet.count }, (_, i) => <BalanceHeader seed={this.props.wallet.naked} id={i}/>)}
+                {Array.from({ length: this.props.wallet.count }, (_, i) => <BalanceHeader seed={this.props.wallet.naked} id={i} count={this.props.wallet.count}/>)}
                 {}
             </div>
         )
